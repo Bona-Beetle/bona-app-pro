@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>BONA BEETLE PRO (Dev)</title>
+    <title>BONA BEETLE LITE</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -21,22 +21,81 @@
         }
     </script>
     <style>
+        /* APP SHELL LOCK */
         html { height: 100%; overflow: hidden; background-color: #0f0f0f; }
-        body { height: 100%; width: 100%; margin: 0; padding: 0; background-color: #0f0f0f; color: #e5e5e5; overflow: hidden; -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        #app-container { display: flex; flex-direction: column; height: 100%; width: 100%; max-width: 480px; margin: 0 auto; position: relative; background-color: #0f0f0f; }
-        .fixed-header-wrapper { position: absolute; top: 0; left: 0; right: 0; z-index: 50; background-color: rgba(15, 15, 15, 0.98); border-bottom: 1px solid #333; padding-top: max(env(safe-area-inset-top), 20px); min-height: 140px; display: flex; flex-direction: column; justify-content: center; }
-        .detail-header { position: absolute; top: 0; left: 0; right: 0; z-index: 60; background-color: rgba(15, 15, 15, 0.98); border-bottom: 1px solid #333; padding-top: max(env(safe-area-inset-top), 15px); height: 90px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding-left: 1rem; padding-right: 1rem; }
-        .dashboard-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 220px; padding-bottom: 120px; padding-left: 1rem; padding-right: 1rem; }
-        .detail-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 110px; padding-bottom: 120px; padding-left: 1rem; padding-right: 1rem; }
-        .fixed-bottom-wrapper { position: absolute; bottom: 0; left: 0; right: 0; z-index: 50; background-color: rgba(15, 15, 15, 0.95); border-top: 1px solid #333; padding: 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+        body { 
+            height: 100%; width: 100%; margin: 0; padding: 0; 
+            background-color: #0f0f0f; color: #e5e5e5; 
+            overflow: hidden; overscroll-behavior: none; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
+        #app-container {
+            display: flex; flex-direction: column;
+            height: 100%; width: 100%; max-width: 480px;
+            margin: 0 auto; position: relative; background-color: #0f0f0f;
+        }
+
+        /* HEADER */
+        .fixed-header-wrapper {
+            position: absolute; top: 0; left: 0; right: 0; z-index: 50;
+            background-color: rgba(15, 15, 15, 0.98);
+            border-bottom: 1px solid #333;
+            padding-top: max(env(safe-area-inset-top), 20px);
+            min-height: 140px; 
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .fixed-header-wrapper * { pointer-events: auto; }
+
+        /* DETAIL HEADER */
+        .detail-header {
+            position: absolute; top: 0; left: 0; right: 0; 
+            z-index: 60; 
+            background-color: rgba(15, 15, 15, 0.98);
+            border-bottom: 1px solid #333;
+            padding-top: max(env(safe-area-inset-top), 15px);
+            height: 90px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding-left: 1rem; padding-right: 1rem;
+        }
+
+        /* CONTENT */
+        .dashboard-content {
+            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+            padding-top: 220px; 
+            padding-bottom: 120px; 
+            padding-left: 1rem; padding-right: 1rem;
+        }
+        
+        .detail-content {
+            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+            padding-top: 110px; 
+            padding-bottom: 120px; 
+            padding-left: 1rem; padding-right: 1rem;
+        }
+        
+        /* BOTTOM BUTTON */
+        .fixed-bottom-wrapper {
+            position: absolute; bottom: 0; left: 0; right: 0; z-index: 50;
+            background-color: rgba(15, 15, 15, 0.95);
+            border-top: 1px solid #333;
+            padding: 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        }
+
+        /* UTILS */
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #a68a2e 100%); }
         .glass-panel { background: rgba(38, 38, 38, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); }
         .loader { border: 4px solid #333; border-top: 4px solid #d4af37; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .quota-bar { transition: width 0.5s ease-out; }
         .lineage-link { color: #d4af37; text-decoration: underline; font-weight: bold; cursor: pointer; }
+        
+        /* Force Clickability */
         button { cursor: pointer; pointer-events: auto; }
         input, select { -webkit-appearance: none; }
+        
         .nav-btn { position: relative; z-index: 100; cursor: pointer; }
     </style>
 </head>
@@ -46,7 +105,7 @@
     <div id="notification-area" class="fixed top-32 left-1/2 transform -translate-x-1/2 z-[300] w-11/12 max-w-sm space-y-2 pointer-events-none"></div>
     <div id="loading-overlay" class="fixed inset-0 bg-black/90 z-[300] hidden flex-col items-center justify-center">
         <div class="loader mb-4"></div>
-        <p class="text-bona-gold text-lg font-bold tracking-wider animate-pulse">PROCESSING</p>
+        <p class="text-bona-gold text-lg font-bold tracking-wider animate-pulse">SYSTEM PROCESSING</p>
     </div>
 
     <!-- APP SHELL -->
@@ -59,12 +118,12 @@
                      <img src="logo.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" class="w-full h-full object-cover">
                      <i class="fa-solid fa-bug text-4xl text-bona-gold hidden absolute"></i>
             </div>
-                <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-widest">BONA <span class="text-bona-gold">PRO</span></h1>
+                <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-widest">BONA <span class="text-bona-gold">LITE</span></h1>
             </div>
             <div class="w-full glass-panel p-8 rounded-xl shadow-2xl space-y-6">
                 <div>
                     <label class="block text-bona-muted text-xs uppercase font-bold mb-2 tracking-wider">授權碼 (License Key)</label>
-                    <input type="text" id="login-license" class="w-full bg-bona-black border border-gray-700 text-white rounded-lg p-4 focus:outline-none focus:border-bona-gold transition-colors text-center font-mono tracking-widest text-lg" placeholder="輸入授權碼">
+                    <input type="text" id="login-license" class="w-full bg-bona-black border border-gray-700 text-white rounded-lg p-4 focus:outline-none focus:border-bona-gold transition-colors text-center font-mono tracking-widest text-lg" placeholder="輸入授權碼 (區分大小寫)">
                 </div>
                 <button onclick="window.handleLogin()" class="w-full gold-gradient text-black font-bold py-4 rounded-lg shadow-lg hover:brightness-110 text-lg relative z-50">
                     驗證並登入
@@ -78,7 +137,7 @@
                 <div class="flex justify-between items-center mb-3 w-full px-4">
                     <div class="flex items-center space-x-3">
                         <div class="w-8 h-8 rounded-full border border-bona-gold flex items-center justify-center overflow-hidden"><img src="logo.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" class="w-full h-full object-cover"><i class="fa-solid fa-bug text-bona-gold text-xs hidden"></i></div>
-                        <div class="flex flex-col"><span class="font-bold text-lg tracking-wide leading-tight">BONA<span class="text-bona-gold">PRO</span></span><span class="text-[10px] text-gray-500 font-mono" id="dashboard-license-display">--</span></div>
+                        <div class="flex flex-col"><span class="font-bold text-lg tracking-wide leading-tight">BONA<span class="text-bona-gold">SYSTEMS</span></span><span class="text-[10px] text-gray-500 font-mono" id="dashboard-license-display">--</span></div>
                     </div>
                     <button onclick="window.logout()" class="text-bona-muted hover:text-white p-2 nav-btn"><i class="fa-solid fa-power-off text-lg"></i></button>
                 </div>
@@ -106,6 +165,7 @@
         <div id="view-detail" class="hidden h-full flex-col relative">
             <header class="detail-header">
                 <div class="flex justify-start">
+                    <!-- FIX: Back Button now calls showDashboard -->
                     <button onclick="window.showDashboard()" class="nav-btn text-gray-400 hover:text-white p-4 -ml-4 rounded-full hover:bg-white/10 flex items-center justify-center z-50">
                         <i class="fa-solid fa-arrow-left text-3xl"></i>
                     </button>
@@ -120,6 +180,7 @@
                     <div class="text-3xl font-bold text-white font-mono mb-2" id="d-id">--</div>
                     <div class="flex space-x-6 text-sm text-gray-400"><span><i class="fa-solid fa-dna text-bona-gold mr-1"></i> 累代: <span id="d-gen">--</span></span><span><i class="fa-solid fa-calendar text-bona-gold mr-1"></i> 孵化: <span id="d-hatch">--</span></span></div>
                 </div>
+                <!-- ... Content Preserved ... -->
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-bona-card p-4 rounded-xl border border-gray-800"><div class="text-xs text-gray-500 uppercase mb-1">目前體重</div><div class="text-3xl font-bold text-white"><span id="d-weight">--</span> <span class="text-sm text-gray-500 font-normal">g</span></div></div>
                     <div class="bg-bona-card p-4 rounded-xl border border-gray-800"><div class="text-xs text-gray-500 uppercase mb-1">最後量測</div><div class="text-lg font-bold text-white" id="d-check">--</div></div>
@@ -156,7 +217,7 @@
             <div class="fixed-bottom-wrapper"><button onclick="window.openUpdateModal()" class="w-full bg-white text-black font-bold py-4 rounded-lg shadow-lg hover:bg-gray-200 uppercase tracking-widest text-lg">記錄成長數據</button></div>
         </div>
 
-        <!-- MODALS -->
+        <!-- SCANNER & MODALS -->
         <div id="view-scanner" class="hidden fixed inset-0 z-[400] bg-black flex flex-col">
             <div class="fixed-header-wrapper p-4 flex justify-between items-center" style="min-height: 80px;">
                 <span class="text-white font-bold tracking-widest">掃描條碼</span><button onclick="window.closeScanner()" class="bg-gray-800 text-white w-10 h-10 rounded-full flex items-center justify-center"><i class="fa-solid fa-times text-xl"></i></button>
@@ -189,11 +250,13 @@
                 <div class="bg-gray-900 p-6 rounded-lg border border-gray-700 space-y-4">
                     <label class="block text-xs text-bona-gold uppercase font-bold tracking-widest text-center mb-2">設定物種代碼 (Prefix)</label>
                     
-                    <!-- Datalist Hook -->
+                    <!-- NEW: Datalist Hooked Input -->
                     <input type="text" id="id-prefix" list="species-options" class="w-full bg-black border-2 border-bona-gold/50 rounded-xl text-white text-4xl p-4 outline-none text-center font-bold uppercase tracking-widest h-20 focus:border-bona-gold transition-colors" placeholder="D" value="D" oninput="this.value = this.value.toUpperCase(); window.updateIDPreview()">
                     
-                    <!-- Datalist Content -->
-                    <datalist id="species-options"></datalist>
+                    <!-- NEW: The Datalist itself -->
+                    <datalist id="species-options">
+                        <!-- Options will be populated by JS -->
+                    </datalist>
 
                     <div class="text-center"><button type="button" onclick="document.getElementById('id-details').classList.toggle('hidden')" class="text-xs text-gray-500 underline hover:text-white">顯示/隱藏 詳細編碼設定</button></div>
                     <div id="id-details" class="hidden grid grid-cols-3 gap-3 pt-2 border-t border-gray-800">
@@ -207,7 +270,21 @@
                 <div class="grid grid-cols-2 gap-5"><div><label class="block text-xs text-gray-400 uppercase mb-2 font-bold">孵化日</label><input type="date" id="new-hatch-date" class="w-full bg-black border border-gray-700 rounded-lg p-3 text-white text-base focus:border-bona-gold outline-none h-12"></div><div><label class="block text-xs text-gray-400 uppercase mb-2 font-bold">量測日期</label><input type="date" id="new-check-date" class="w-full bg-black border border-gray-700 rounded-lg p-3 text-white text-base focus:border-bona-gold outline-none h-12"></div></div>
                 <!-- Lineage -->
                 <div class="space-y-4">
-                    <div><label class="block text-xs text-gray-400 uppercase mb-2 font-bold">累代</label><input type="text" id="new-gen" class="w-full bg-black border border-gray-700 rounded-lg p-3 text-white text-base outline-none uppercase h-12" placeholder="如: CBF1"></div>
+                    <div class="grid grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs text-gray-400 uppercase mb-2 font-bold">累代</label>
+                            <input type="text" id="new-gen" class="w-full bg-black border border-gray-700 rounded-lg p-3 text-white text-base outline-none uppercase h-12" placeholder="如: CBF1">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 uppercase mb-2 font-bold">性別 (Gender)</label>
+                            <select id="new-gender" class="w-full bg-black border border-gray-700 rounded-lg p-3 text-white text-base outline-none h-12">
+                                <option value="Unknown">Unknown (未判定)</option>
+                                <option value="Male">Male (公)</option>
+                                <option value="Female">Female (母)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="grid grid-cols-2 gap-5">
                         <div class="relative">
                             <label class="block text-xs text-gray-500 uppercase mb-1">父 (Sire)</label>
@@ -257,71 +334,43 @@
         let currentDetailData = null;
         let historyDataCache = []; 
 
-        // =================================================================
-        // SPECIES LIST DEFINITION (根據您的截圖整理)
-        // =================================================================
+        // NEW: PREDEFINED SPECIES LIST FOR DATALIST
         const SPECIES_LIST = [
-            // D series (Dynastes)
-            { code: "D", name: "D.h.h (長戟大兜)" }, // Convenience Alias
-            { code: "DHH", name: "D.h.h (長戟大兜)" },
-            { code: "DHL", name: "D.h.l (長戟-雷克)" },
-            { code: "DHO", name: "D.h.o (長戟-西方)" },
-            { code: "DS", name: "D.s.s (撒旦大兜)" },
-            { code: "DM", name: "D.maya (瑪雅大兜)" }, // Updated from M.tarandus
-            { code: "DN", name: "D.neptunus (海神大兜)" },
-            
-            // Megasoma (Elephas, Mars, etc)
-            { code: "MEE", name: "M.elephas (毛象大兜)" },
-            { code: "MM", name: "M.mars (戰神大兜)" },
-            { code: "M", name: "M.tarandus (大黑豔)" }, // Assuming M is used for Tarandus based on common habits, or adjust if needed.
-
-            // Chalcosoma (Atlas, Caucasus)
-            { code: "CCC", name: "C.c.c (南洋大兜)" },
-            { code: "CM", name: "C.mollenkampi (婆羅洲南洋)" },
-
-            // Golofa
-            { code: "GP", name: "G.porteri (豎角兜)" },
-
-            // Prosopocoilus (Sawtooth)
-            { code: "PGK", name: "P.giraffa.k (長頸鹿鋸)" },
-            { code: "PBC", name: "P.bison.c (野牛鋸鍬)" },
-            { code: "PDD", name: "P.dissimilis (奄美鋸)" },
-            { code: "PHM", name: "P.hasterti.m (所羅門鋸)" },
-            { code: "PL", name: "P.lafertei (拉法鋸)" },
-            { code: "PW", name: "P.wallacei (華勒斯鋸)" },
-            { code: "PM", name: "P.motschulskii (高砂鋸)" }, // Conflict handled by listing both
-            { code: "PM", name: "P.muelleri (彩虹鍬形蟲)" }, // Conflict handled
-            { code: "C", name: "P.muelleri (彩虹鍬形蟲)" }, // Alias
-            { code: "PI", name: "P.inclinatus (日本鋸)" },
-            { code: "PF", name: "P.fabricei (法布利斯鋸)" },
-
-            // Lucanus (Deep Mountain)
-            { code: "LCA", name: "L.cervus (歐洲深山)" },
-            { code: "LF", name: "L.formosanus (台灣深山)" },
-            { code: "LM", name: "L.maculifemoratus (高砂深山)" },
-            { code: "LS", name: "L.swinhoei (姬深山)" },
-
-            // Odontolabis (Ghost)
-            { code: "OB", name: "O.burmeisteri (雲頂鬼豔)" },
-            { code: "ODI", name: "O.dalmanni (英特鬼豔)" },
-            { code: "OSP", name: "O.siva (台灣鬼豔)" },
-            { code: "OM", name: "O.mouhotii (霸王鬼豔)" },
-
-            // Dorcus (Stag)
-            { code: "DTT", name: "D.t.t (蘇門答臘巨扁)" },
-            { code: "DTP", name: "D.t.p (巴拉望巨扁)" },
-            { code: "DGP", name: "D.grandis (寮國大鍬)" },
-            { code: "DC", name: "D.curvidens (彎角大鍬)" },
-            { code: "DA", name: "D.antaeus (安達祐實)" },
-            
-            // Hexarthrius
-            { code: "HM", name: "H.mandibularis (巨顎叉角)" },
-            { code: "HP", name: "H.parryi (帕瑞叉角)" },
-
-            // Others / Lamprima / Allotopus
-            { code: "PAM", name: "P.alces (水沼氏兩點赤)" },
-            { code: "LR", name: "L.adolphinae (印金)" },
-            { code: "AB", name: "A.baba (黃金鬼)" }
+            { code: "CA", name: "阿拉蓋瑞細身 (CA)" },
+            { code: "CE", name: "紅鹿細身 (CE)" },
+            { code: "CMF", name: "美他細身 (CMF)" },
+            { code: "DHB", name: "日本大鍬 (DHB)" },
+            { code: "DHH", name: "中國大鍬 (DHH)" }, // Duplicate code handled by list
+            { code: "DHH", name: "長戟大兜 (DHH)" }, // Duplicate code handled by list
+            { code: "DTP", name: "巴拉望巨扁 (DTP)" },
+            { code: "HFN", name: "紅蓮叉角 (HFN)" },
+            { code: "HMM", name: "巨顎叉角 (HMM)" },
+            { code: "HPP", name: "橘背叉角 (HPP)" },
+            { code: "LCA", name: "歐洲深山 (LCA)" },
+            { code: "LCJ", name: "歐洲深山 (LCJ)" },
+            { code: "LF", name: "台灣深山 (LF)" },
+            { code: "LM", name: "高砂深山 (LM)" },
+            { code: "OB", name: "霸王鬼豔 (OB)" },
+            { code: "ODI", name: "英特鬼豔 (ODI)" },
+            { code: "OSP", name: "台灣鬼豔 (OSP)" },
+            { code: "PAM", name: "水沼氏兩點鋸 (PAM)" },
+            { code: "PBC", name: "野牛鋸鍬 (PBC)" },
+            { code: "PDD", name: "奄美鋸 (PDD)" },
+            { code: "PGK", name: "長頸鹿鋸 (PGK)" },
+            { code: "PHM", name: "所羅門鋸 (PHM)" },
+            { code: "PL", name: "拉法鐵鋸 (PL)" },
+            { code: "PM", name: "高砂鋸 (PM)" }, // Duplicate code handled by list
+            { code: "PM", name: "彩虹鍬形蟲 (PM)" }, // Duplicate code handled by list
+            { code: "PW", name: "華勒斯鋸 (PW)" },
+            { code: "CCC", name: "南洋大兜 (CCC)" },
+            { code: "DHL", name: "長戟大兜(雷克) (DHL)" },
+            { code: "DM", name: "瑪雅大兜 (DM)" },
+            { code: "DN", name: "海神大兜 (DN)" },
+            { code: "DS", name: "撒旦大兜 (DS)" },
+            { code: "GP", name: "豎角兜 (GP)" },
+            { code: "MEE", name: "毛象大兜 (MEE)" },
+            { code: "C", name: "彩虹鍬形蟲 (C)" }, // Alias
+            { code: "OTHER", name: "其他" }
         ];
 
         // Fix: Explicitly define showDashboard
@@ -358,18 +407,23 @@
         window.updateIDPreview = function() { const prefix = document.getElementById('id-prefix').value || 'D'; const year = document.getElementById('id-year').value; let batch = document.getElementById('id-batch').value || '00'; let seq = document.getElementById('id-seq').value || '000'; if (batch.length < 2) batch = '0' + batch; if (seq.length < 3) seq = ('000' + seq).slice(-3); const fullId = `${prefix}-${year}-${batch}-${seq}`; document.getElementById('id-preview').innerText = fullId; return fullId; }
         window.updateDashboardUI = function() { if(!currentUser) return; const display = currentUser.length > 8 ? currentUser.substring(0, 4) + '****' + currentUser.substring(currentUser.length - 4) : currentUser; document.getElementById('dashboard-license-display').innerText = `LIC: ${display}`; const percent = Math.min((quotaInfo.used / quotaInfo.max) * 100, 100); document.getElementById('quota-bar-fill').style.width = `${percent}%`; document.getElementById('quota-text').innerText = `${quotaInfo.used} / ${quotaInfo.max}`; const bar = document.getElementById('quota-bar-fill'); if (percent >= 90) bar.className = 'quota-bar h-full bg-bona-danger'; else bar.className = 'quota-bar h-full bg-bona-gold'; }
         window.verifyLicense = async function(key, silent) { if (!silent) window.showLoading(true); try { const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'auth', userId: key }) }); const text = await response.text(); 
+            // IMPROVED ERROR HANDLING: Check if text is JSON-parsable
             let data;
             try {
                 data = JSON.parse(text);
             } catch (e) {
+                // FALLBACK: If Make sends plain "Accepted" or similar non-JSON success
                 console.log("Raw Response:", text);
                 if (text.includes('Accepted') || response.ok) {
+                    // Treat as auth success if HTTP 200 but no JSON
+                     // Mocking a successful auth response structure for fallback
                      data = { status: 'Active', key_found: key, max: 50, used: 0 };
                 } else {
-                    throw new Error(`伺服器回應格式錯誤`);
+                    throw new Error(`伺服器回應格式錯誤: ${text.substring(0, 20)}...`);
                 }
             }
-            if (data.json) { try { data = JSON.parse(data.json); } catch(e){} } if (Array.isArray(data)) data = data[0]; const rawKey = data.key_found || data['License Key'] || data.id; const rawStatus = data.status || data.Status; const rawRealId = data.real_id || data.user_id || data.id; const cleanKey = window.cleanData(rawKey); const cleanStatus = window.cleanData(rawStatus).toString().trim(); const cleanRealId = window.cleanData(rawRealId); const keyMatch = cleanKey === key; const isActive = cleanStatus.toLowerCase().includes('active'); if (keyMatch && isActive) { currentUser = key; currentRealId = cleanRealId && cleanRealId !== '--' ? cleanRealId : key; localStorage.setItem('bona_user_key', key); localStorage.setItem('bona_user_id', currentRealId); quotaInfo = { max: parseInt(data.max) || 50, used: parseInt(data.used) || 0 }; window.updateDashboardUI(); if (!silent) { window.showNotification('登入成功', 'success'); window.switchView('dashboard'); } } else { if (!silent) { let msg = !keyMatch ? "授權碼不符" : "帳號狀態異常"; window.showNotification(`登入失敗: ${msg}`, 'error'); } else window.logout(); } } catch(e) { if(!silent) window.showNotification(`連線錯誤`, 'error'); } finally { if(!silent) window.showLoading(false); } }
+            
+            if (data.json) { try { data = JSON.parse(data.json); } catch(e){} } if (Array.isArray(data)) data = data[0]; const rawKey = data.key_found || data['License Key'] || data.id; const rawStatus = data.status || data.Status; const rawRealId = data.real_id || data.user_id || data.id; const cleanKey = window.cleanData(rawKey); const cleanStatus = window.cleanData(rawStatus).toString().trim(); const cleanRealId = window.cleanData(rawRealId); const keyMatch = cleanKey === key; const isActive = cleanStatus.toLowerCase().includes('active'); if (keyMatch && isActive) { currentUser = key; currentRealId = cleanRealId && cleanRealId !== '--' ? cleanRealId : key; localStorage.setItem('bona_user_key', key); localStorage.setItem('bona_user_id', currentRealId); quotaInfo = { max: parseInt(data.max) || 50, used: parseInt(data.used) || 0 }; window.updateDashboardUI(); if (!silent) { window.showNotification('登入成功', 'success'); window.switchView('dashboard'); } } else { if (!silent) { let msg = !keyMatch ? "授權碼不符 (大小寫敏感)" : "帳號狀態異常"; window.showNotification(`登入失敗: ${msg}`, 'error'); } else window.logout(); } } catch(e) { if(!silent) window.showNotification(`連線錯誤: ${e.message}`, 'error'); } finally { if(!silent) window.showLoading(false); } }
         window.consolidateData = function(rawList) { let final = { ...rawList[0] }; const isValid = (v) => { const s = window.cleanData(v); return s && s !== '--' && s !== ''; }; const staticFields = ['generation', 'date_hatch', 'sire_size', 'dam_size', 'id']; staticFields.forEach(field => { if (!isValid(final[field])) { const found = rawList.find(r => isValid(r[field])); if (found) final[field] = found[field]; } }); return final; }
         window.fetchBeetleData = async function(id) { if (!currentUser) return window.showNotification('請先登入', 'error'); const targetUser = currentRealId || currentUser; window.showLoading(true); try { const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'query', id: id, userId: targetUser }) }); const text = await response.text(); let data; try { data = JSON.parse(text); } catch (e) { throw new Error(`非 JSON 格式回應`); } if (data.json) { try { data = typeof data.json === 'string' ? JSON.parse(data.json) : data.json; } catch(e) {} } const normalize = (obj) => { if (!obj || typeof obj !== 'object') return obj; const newObj = {}; Object.keys(obj).forEach(key => newObj[key.toLowerCase()] = obj[key]); return newObj; }; let rawList = []; if (Array.isArray(data)) rawList = data; else if (typeof data === 'object' && data !== null) { if (data.id || data.ID) rawList = [data]; else if (data.body || data.data || data.items) { const inner = data.body || data.data || data.items; rawList = Array.isArray(inner) ? inner : [inner]; } } if (rawList.length > 0) { const normalizedList = rawList.map(normalize); const validHistory = normalizedList.filter(r => r.id && window.cleanData(r.id) !== '--'); if (validHistory.length > 0) { historyDataCache = validHistory; const consolidatedRecord = window.consolidateData(validHistory); currentDetailData = consolidatedRecord; window.populateDetailView(consolidatedRecord); window.renderHistoryList(validHistory); window.calculateGrowth(consolidatedRecord, validHistory); window.switchView('detail'); document.getElementById('search-id').value = ''; } else { window.showNotification(`資料結構異常`, 'error'); } } else { window.showNotification(`找不到資料`, 'error'); } } catch (error) { window.showNotification(`系統錯誤: ${error.message}`, 'error'); } finally { window.showLoading(false); } }
         window.calculateGrowth = function(current, history) { const curDate = new Date(window.cleanData(current.date_check)); const hatchDate = new Date(window.cleanData(current.date_hatch)); const curWeight = parseFloat(window.cleanData(current.weight)); let totalAvg = '--'; if (!isNaN(curDate) && !isNaN(hatchDate) && !isNaN(curWeight)) { const totalDays = (curDate - hatchDate) / (1000 * 60 * 60 * 24); if (totalDays > 0) totalAvg = (curWeight / totalDays).toFixed(3) + ' g/日'; } document.getElementById('d-growth-total').innerText = totalAvg; let intervalAvg = '--'; if (history && history.length > 1) { const prev = history[1]; const prevDate = new Date(window.cleanData(prev.date_check)); const prevWeight = parseFloat(window.cleanData(prev.weight)); if (!isNaN(curDate) && !isNaN(prevDate) && !isNaN(curWeight) && !isNaN(prevWeight)) { const intDays = (curDate - prevDate) / (1000 * 60 * 60 * 24); const weightDiff = curWeight - prevWeight; if (intDays > 0) { intervalAvg = (weightDiff / intDays).toFixed(3) + ' g/日'; const el = document.getElementById('d-growth-interval'); el.className = weightDiff >= 0 ? "font-mono text-lg text-bona-success font-bold" : "font-mono text-lg text-bona-danger font-bold"; } } } document.getElementById('d-growth-interval').innerText = intervalAvg; }
@@ -397,6 +451,8 @@
                     date_check: window.getDomVal('new-check-date') || new Date().toISOString().split('T')[0],
                     date_hatch: window.getDomVal('new-hatch-date') || new Date().toISOString().split('T')[0],
                     generation: (window.getDomVal('new-gen') || '').toUpperCase(),
+                    // NEW: Capture Gender Value
+                    gender: window.getDomVal('new-gender') || 'Unknown',
                     sire_size: window.getDomVal('new-sire') || 'N/A',
                     dam_size: window.getDomVal('new-dam') || 'N/A',
                     weight: parseFloat(window.getDomVal('new-weight') || 0),
@@ -412,6 +468,7 @@
                 const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const text = await response.text();
                 
+                // IMPROVED ERROR HANDLING for Update/New Entry
                 let data;
                 try {
                     data = JSON.parse(text);
@@ -420,7 +477,7 @@
                     if(text.includes('Accepted') || response.ok) {
                         data = { status: 'success' }; // Fallback
                     } else {
-                         throw new Error(`伺服器回應錯誤`);
+                         throw new Error(`伺服器回應錯誤: ${text.substring(0,30)}`);
                     }
                 }
 
@@ -457,12 +514,13 @@
                 const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)}); 
                 const text = await res.text();
                 
+                // IMPROVED ERROR HANDLING for Update
                 try {
-                    JSON.parse(text); 
+                    JSON.parse(text); // Check if valid JSON
                 } catch(e) {
                     console.log("Raw Update Response:", text);
                     if(!text.includes('Accepted') && !res.ok) {
-                         throw new Error(`伺服器回應錯誤`);
+                         throw new Error(`伺服器回應錯誤: ${text.substring(0,30)}`);
                     }
                 }
 
@@ -479,6 +537,7 @@
             document.getElementById('new-check-date').value = today;
             document.getElementById('new-hatch-date').value = today;
             
+            // Memory Recall
             const lastSire = localStorage.getItem('last_sire');
             const lastDam = localStorage.getItem('last_dam');
             if(lastSire) document.getElementById('new-sire').value = lastSire;
@@ -541,12 +600,13 @@
             if(hatchEl) hatchEl.value = today;
             if(updEl) updEl.value = today;
             
+            // Populating the datalist with defined SPECIES_LIST
             const datalist = document.getElementById('species-options');
             if (datalist) {
                 SPECIES_LIST.forEach(species => {
                     const option = document.createElement('option');
                     option.value = species.code;
-                    option.label = species.name; 
+                    option.label = species.name; // Shows full name as suggestion
                     datalist.appendChild(option);
                 });
             }
