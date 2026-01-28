@@ -276,11 +276,17 @@
                             <input type="text" id="new-gen" class="w-full bg-black border border-gray-700 rounded-lg p-3 text-white text-base outline-none uppercase h-12" placeholder="如: CBF1">
                         </div>
                         <div>
-                            <label class="block text-xs text-gray-400 uppercase mb-2 font-bold">性別 (Gender)</label>
-                            <select id="new-gender" class="w-full bg-black border border-gray-700 rounded-lg p-3 text-white text-base outline-none h-12">
-                                <option value="Unknown">Unknown (未判定)</option>
-                                <option value="Male">Male (公)</option>
-                                <option value="Female">Female (母)</option>
+                            <!-- UPDATED: Status Dropdown -->
+                            <label class="block text-xs text-gray-400 uppercase mb-2 font-bold">狀態 (Status)</label>
+                            <select id="new-status" class="w-full bg-black border border-gray-700 rounded-lg p-3 text-white text-base outline-none h-12">
+                                <option value="Larva">Larva (幼蟲 - L1~L3)</option>
+                                <option value="Egg">Egg (卵)</option>
+                                <option value="L1">L1 (一齡)</option>
+                                <option value="L2">L2 (二齡)</option>
+                                <option value="L3">L3 (三齡)</option>
+                                <option value="Prepupa">Prepupa (前蛹)</option>
+                                <option value="Pupa">Pupa (蛹)</option>
+                                <option value="Adult">Adult (成蟲)</option>
                             </select>
                         </div>
                     </div>
@@ -296,6 +302,15 @@
                             <input type="text" id="new-dam" class="w-full bg-black border border-gray-700 rounded-lg p-3 pr-10 text-white text-base outline-none h-12" placeholder="ID/尺寸">
                             <button type="button" onclick="window.openScanner('fill', 'new-dam')" class="absolute right-2 bottom-2 text-bona-gold p-2"><i class="fa-solid fa-qrcode"></i></button>
                         </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs text-gray-400 uppercase mb-2 font-bold">性別 (Gender)</label>
+                        <select id="new-gender" class="w-full bg-black border border-gray-700 rounded-lg p-3 text-white text-base outline-none h-12">
+                            <option value="Unknown">Unknown (未判定)</option>
+                            <option value="Male">Male (公)</option>
+                            <option value="Female">Female (母)</option>
+                        </select>
                     </div>
                 </div>
 
@@ -453,6 +468,8 @@
                     generation: (window.getDomVal('new-gen') || '').toUpperCase(),
                     // NEW: Capture Gender Value
                     gender: window.getDomVal('new-gender') || 'Unknown',
+                    // NEW: Capture Status Value
+                    status: window.getDomVal('new-status') || 'Larva',
                     sire_size: window.getDomVal('new-sire') || 'N/A',
                     dam_size: window.getDomVal('new-dam') || 'N/A',
                     weight: parseFloat(window.getDomVal('new-weight') || 0),
